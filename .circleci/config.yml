@@ -62,7 +62,7 @@ jobs:
           command: |
               cd backend
               npm i
-             exit 1
+              exit 1
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
@@ -97,7 +97,7 @@ jobs:
           command: |
               cd backend
               npm i
-             exit 1
+              exit 1
       - run:
           name: Test backend
           command: |
@@ -134,7 +134,7 @@ jobs:
           command: |
               cd backend
               npm i
-             exit 1
+              exit 1
       - run:
           name: scan backend
           command: |
@@ -143,9 +143,9 @@ jobs:
              
   deploy-infrastructure:
     docker:
-      # Docker image here that supports AWS CLI
+      - image: amazon/aws-cli
     steps:
-      # Checkout code from git
+      - checkout
       - run:
           name: Ensure back-end infrastructure exists
           command: |
