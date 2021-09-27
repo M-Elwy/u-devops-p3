@@ -43,7 +43,8 @@ jobs:
       - run:
           name: Build front-end
           command: |
-            # Your code here
+            cd frontend
+            npm i 
             exit 1
       - save_cache:
           paths: [frontend/node_modules]
@@ -59,7 +60,8 @@ jobs:
       - run:
           name: Back-end build
           command: |
-             # Your code here
+              cd backend
+              npm i
              exit 1
       - save_cache:
           paths: [backend/node_modules]
@@ -67,36 +69,78 @@ jobs:
 
   test-frontend:
     docker:
-      # Docker image here
+      - image: circleci/node:13.8.0
     steps:
-      # Checkout code from git
-      # Restore from cache
-      # Your job code here
+      - checkout
+      - restore_cache:
+          keys: [frontend-build]
+      - run:
+          name: Build front-end
+          command: |
+            cd frontend
+            npm i 
+      - run:
+          name: Test frontend
+          command: |
+            cd frontend
+            npm run test
                 
   test-backend:
     docker:
-      # Docker image here
+      - image: circleci/node:13.8.0
     steps:
-      # Checkout code from git
-      # Restore from cache
-      # Your job code here
-            
+      - checkout
+      - restore_cache:
+          keys: [backend-build]
+      - run:
+          name: Back-end build
+          command: |
+              cd backend
+              npm i
+             exit 1
+      - run:
+          name: Test backend
+          command: |
+            cd backend
+            npm run test
+
   scan-frontend:
     docker:
-      # Docker image here
+      - image: circleci/node:13.8.0
     steps:
-      # Checkout code from git
-      # Restore from cache
-      # Your job code here
+      - checkout
+      - restore_cache:
+          keys: [frontend-build]
+      - run:
+          name: Build front-end
+          command: |
+            cd frontend
+            npm i 
+      - run:
+          name: scan frontend
+          command: |
+            cd frontend
+            npm audit --audit-level=critical
 
   scan-backend:
     docker:
-      # Docker image here
+      - image: circleci/node:13.8.0
     steps:
-      # Checkout code from git
-      # Restore from cache
-      # Your job code here
-
+      - checkout
+      - restore_cache:
+          keys: [backend-build]
+      - run:
+          name: Back-end build
+          command: |
+              cd backend
+              npm i
+             exit 1
+      - run:
+          name: scan backend
+          command: |
+            cd backend
+             npm audit --audit-level=critical
+             
   deploy-infrastructure:
     docker:
       # Docker image here that supports AWS CLI
