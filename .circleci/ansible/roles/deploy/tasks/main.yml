@@ -6,11 +6,11 @@
 - name: "Run migrations and store result"
   shell: |
     cd /home/ubuntu/backend
-    npm run migrations > migrations.txt
+    npm run migrations > migration.txt
     cat migrations.txt
     export CIRCLE_WORKFLOW_ID="{{ CIRCLE_WORKFLOW_ID }}"
     echo CIRCLE_WORKFLOW_ID=${CIRCLE_WORKFLOW_ID}
-    curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data $( grep -c "has been executed successfully" migrations.txt ) https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
+    curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data $( grep -c "has been executed successfully" migration.txt ) https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
   register: migration_output
 
 - debug:
