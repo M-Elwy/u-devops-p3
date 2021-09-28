@@ -53,7 +53,7 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
-      - slack/notify
+      - slack/notify:
           event: fail
           template: basic_fail_1
   build-backend:
@@ -72,7 +72,7 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
-      - slack/notify
+      - slack/notify:
           event: fail
           template: basic_fail_1
 
@@ -93,7 +93,7 @@ jobs:
           command: |
             cd frontend
             npm run test
-      - slack/notify
+      - slack/notify:
           event: fail
           template: basic_fail_1
                 
@@ -114,7 +114,7 @@ jobs:
           command: |
             cd backend
             npm run test
-      - slack/notify
+      - slack/notify:
           event: fail
           template: basic_fail_1
 
@@ -135,7 +135,7 @@ jobs:
           command: |
             cd frontend
             npm audit fix --audit-level=critical --force
-      - slack/notify
+      - slack/notify:
           event: fail
           template: basic_fail_1
 
@@ -156,7 +156,7 @@ jobs:
           command: |
             cd backend
              npm audit fix --audit-level=critical --force
-      - slack/notify
+      - slack/notify:
           event: fail
           template: basic_fail_1
              
@@ -196,7 +196,7 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
             - project/.circleci/output/backend_api_ip.txt
-      - slack/notify
+      - slack/notify:
           event: fail
           template: basic_fail_1
       # Here's where you will add some code to rollback on failure      
@@ -220,7 +220,7 @@ jobs:
           command: |
             cd .circleci/ansible/
             ansible-playbook -i ./inventory deploy-backend.yml
-      - slack/notify
+      - slack/notify:
           event: fail
           template: basic_fail_1
       # Here's where you will add some code to rollback on failure      
@@ -240,7 +240,7 @@ jobs:
           command: |
             # Your code here
             exit 1
-      - slack/notify
+      - slack/notify:
           event: fail
           template: basic_fail_1
      # Here's where you will add some code to rollback on failure      
@@ -268,7 +268,7 @@ jobs:
           name: Deploy frontend objects
           command: |
             aws s3 cp ~/project/frontend/dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}/ --recursive
-      - slack/notify
+      - slack/notify:
           event: fail
           template: basic_fail_1
       # Here's where you will add some code to rollback on failure      
@@ -297,7 +297,7 @@ jobs:
             cp .env.sample dist/.env
             cd ~/project/.circleci/ansible/
             ansible-playbook -i ./inventory deploy.yml
-      - slack/notify
+      - slack/notify:
           event: fail
           template: basic_fail_1
       # Here's where you will add some code to rollback on failure  
@@ -337,7 +337,7 @@ jobs:
             else
               return 1
             fi
-      - slack/notify
+      - slack/notify:
           event: fail
           template: basic_fail_1
       # Here's where you will add some code to rollback on failure  
@@ -358,7 +358,7 @@ jobs:
               --template-file .circleci/cloudformation/cloudfront_infrastructure.yml \
               --parameter-overrides ID="prod-${CIRCLE_WORKFLOW_ID:0:7}" \
               --stack-name udapeople-prod-cloudfront
-      - slack/notify
+      - slack/notify:
           event: fail
           template: basic_fail_1
       # Here's where you will add some code to rollback on failure  
@@ -381,7 +381,7 @@ jobs:
             then
               aws cloudformation delete-stack --stack-name ${STACKS[@]}
             fi
-      - slack/notify
+      - slack/notify:
           event: fail
           template: basic_fail_1 
 
