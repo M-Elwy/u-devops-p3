@@ -9,14 +9,3 @@
   become: true
   shell: |
     npm install pm2 -g
-
-
-- name: "Copy backend to server"
-  copy:
-    src: ~/backend
-    dest: /home/ubuntu
-
-- name: "Install project dependencies"
-  shell: |
-    cd /home/ubuntu/backend  
-    npm install 
