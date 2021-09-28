@@ -15,7 +15,10 @@
         seconds : 600
 
     - name: "install python for Ansible."
-      # Your code here
+      apt:
+        name: python
+        state: present
+        update_cache: true
 
   roles:
     - configure-server
