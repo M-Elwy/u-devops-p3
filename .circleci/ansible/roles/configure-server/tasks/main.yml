@@ -6,11 +6,8 @@
 
 - name: "Install pm2"
   become: true
-  npm:
-    name: pm2
-    global: yes
-    production: yes
-    state: present
+  shell: |
+    sudo npm install pm2 -g
 
 - name: "Copy backend to server"
   copy:
