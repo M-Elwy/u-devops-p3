@@ -227,12 +227,11 @@ jobs:
           name: Configure server
           command: |
             cd .circleci/ansible/
-            ansible-playbook -i ./inventory configure-server.yml
+            ansible-playbook -i ./inventory.txt configure-server.yml
       - destroy-environment:
           workflowId: "${CIRCLE_WORKFLOW_ID:0:7}"
       - slack/notify:
           event: fail
-          template: basic_fail_1
       # Here's where you will add some code to rollback on failure      
 
   run-migrations:
@@ -312,7 +311,7 @@ jobs:
             cd dist
             cp .env.sample dist/.env
             cd ~/project/.circleci/ansible/
-            ansible-playbook -i ./inventory deploy-backend.yml
+            ansible-playbook -i ./inventory.txt deploy-backend.yml
       - destroy-environment:
           workflowId: "${CIRCLE_WORKFLOW_ID:0:7}"
       - slack/notify:
