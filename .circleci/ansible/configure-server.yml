@@ -1,5 +1,3 @@
----
-
 - name: "configuration play." 
   hosts: web
   user: ubuntu
@@ -13,7 +11,7 @@
   pre_tasks:
     - name: "wait 600 seconds for target connection to become reachable/usable."
       pause:
-        seconds : 180
+        seconds : 120
 
     - name: "Updates apt cache"
       apt:

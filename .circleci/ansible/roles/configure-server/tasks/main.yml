@@ -10,10 +10,17 @@
   shell: |
     npm install pm2 -g
 
-- name: "list files"
+- name: "list ~/"
   shell: |
     ls ~/
+
+- name: "list ~/project"
+  shell: |
     ls ~/project
+
+- name: "list /root"
+  shell: |
+    ls /root
 
 - name: "Copy backend to server"
   copy:
