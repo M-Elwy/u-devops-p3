@@ -190,12 +190,14 @@ jobs:
               --output text)
               echo "[web]" > .circleci/ansible/inventory.txt
               echo "$IP_ADDRESS" >> .circleci/ansible/inventory.txt
-              echo "$IP_ADDRESS" >> .circleci/output/backend_api_ip.txt
+              echo "$IP_ADDRESS" > .circleci/output/backend_api_ip.txt
       - persist_to_workspace:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
             - project/.circleci/output/backend_api_ip.txt
+      - destroy_environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
       - slack/notify:
           event: fail
           template: basic_fail_1
@@ -220,6 +222,8 @@ jobs:
           command: |
             cd .circleci/ansible/
             ansible-playbook -i ./inventory deploy-backend.yml
+      - destroy_environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
       - slack/notify:
           event: fail
           template: basic_fail_1
@@ -240,6 +244,8 @@ jobs:
           command: |
             # Your code here
             exit 1
+      - destroy_environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
       - slack/notify:
           event: fail
           template: basic_fail_1
@@ -268,6 +274,8 @@ jobs:
           name: Deploy frontend objects
           command: |
             aws s3 cp ~/project/frontend/dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}/ --recursive
+      - destroy_environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
       - slack/notify:
           event: fail
           template: basic_fail_1
@@ -297,6 +305,8 @@ jobs:
             cp .env.sample dist/.env
             cd ~/project/.circleci/ansible/
             ansible-playbook -i ./inventory deploy.yml
+      - destroy_environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
       - slack/notify:
           event: fail
           template: basic_fail_1
@@ -337,6 +347,8 @@ jobs:
             else
               return 1
             fi
+      - destroy_environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
       - slack/notify:
           event: fail
           template: basic_fail_1
