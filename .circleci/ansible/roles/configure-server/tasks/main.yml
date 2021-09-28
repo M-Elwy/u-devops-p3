@@ -8,14 +8,19 @@
 - name: "Install pm2"
   become: true
   shell: |
-    sudo npm install pm2 -g
+    npm install pm2 -g
+
+- name: "list files"
+  shell: |
+    ls ~/
+    ls ~/project
 
 - name: "Copy backend to server"
   copy:
-    src: /root/project/backend
+    src: ~/project/backend
     dest: /home/ubuntu
 
-- name: "Install NodeJs dependencies"
+- name: "Install project dependencies"
   shell: |
-    cd /home/ubuntu/backend    
+    cd ~/project/backend  
     npm install 
