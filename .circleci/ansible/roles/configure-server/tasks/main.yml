@@ -1,8 +1,9 @@
 - name: "Install NodeJs"
   become: true
   shell: |
-    sudo apt -y upgrade
-    sudo apt install -y nodejs
+    apt -y upgrade
+    apt install -y nodejs
+    apt install -y npm
 
 - name: "Install pm2"
   become: true
