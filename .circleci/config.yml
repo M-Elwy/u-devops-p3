@@ -33,7 +33,9 @@ commands:
               Add revert code here. You can find this in the Getting Started section.
               exit 1
             fi
-            
+orbs:
+  slack: circleci/slack@4.4.4
+
 jobs:
   build-frontend:
     docker:
@@ -51,7 +53,7 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
-
+      - slack/status
   build-backend:
     docker:
       - image: circleci/node:13.8.0
@@ -68,6 +70,7 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
+      - slack/status
 
   test-frontend:
     docker:
@@ -86,6 +89,7 @@ jobs:
           command: |
             cd frontend
             npm run test
+      - slack/status
                 
   test-backend:
     docker:
@@ -104,6 +108,7 @@ jobs:
           command: |
             cd backend
             npm run test
+      - slack/status
 
   scan-frontend:
     docker:
@@ -121,7 +126,8 @@ jobs:
           name: scan frontend
           command: |
             cd frontend
-            npm audit --audit-level=critical
+            npm audit fix --audit-level=critical --force
+      - slack/status
 
   scan-backend:
     docker:
@@ -139,7 +145,8 @@ jobs:
           name: scan backend
           command: |
             cd backend
-             npm audit --audit-level=critical
+             npm audit fix --audit-level=critical --force
+      - slack/status
              
   deploy-infrastructure:
     docker:
@@ -177,6 +184,7 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt
             - project/.circleci/output/backend_api_ip.txt
+      - slack/status
       # Here's where you will add some code to rollback on failure      
 
   configure-infrastructure:
@@ -198,6 +206,7 @@ jobs:
           command: |
             cd .circleci/ansible/
             ansible-playbook -i ./inventory deploy-backend.yml
+      - slack/status
       # Here's where you will add some code to rollback on failure      
 
   run-migrations:
@@ -215,6 +224,7 @@ jobs:
           command: |
             # Your code here
             exit 1
+      - slack/status
      # Here's where you will add some code to rollback on failure      
 
   deploy-frontend:
@@ -240,6 +250,7 @@ jobs:
           name: Deploy frontend objects
           command: |
             aws s3 cp ~/project/frontend/dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}/ --recursive
+      - slack/status
       # Here's where you will add some code to rollback on failure      
                     
   deploy-backend:
@@ -266,6 +277,7 @@ jobs:
             cp .env.sample dist/.env
             cd ~/project/.circleci/ansible/
             ansible-playbook -i ./inventory deploy.yml
+      - slack/status
       # Here's where you will add some code to rollback on failure  
 
   smoke-test:
@@ -303,6 +315,7 @@ jobs:
             else
               return 1
             fi
+      - slack/status
       # Here's where you will add some code to rollback on failure  
 
   cloudfront-update:
@@ -321,6 +334,7 @@ jobs:
               --template-file .circleci/cloudformation/cloudfront_infrastructure.yml \
               --parameter-overrides ID="prod-${CIRCLE_WORKFLOW_ID:0:7}" \
               --stack-name udapeople-prod-cloudfront
+      - slack/status
       # Here's where you will add some code to rollback on failure  
 
   cleanup:
@@ -341,7 +355,7 @@ jobs:
             then
               aws cloudformation delete-stack --stack-name ${STACKS[@]}
             fi
-            
+      - slack/status      
 
 workflows:
   default:
