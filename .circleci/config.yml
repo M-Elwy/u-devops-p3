@@ -179,7 +179,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-       image: python:3.7-alpine3.11
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - add_ssh_keys:
@@ -200,9 +200,9 @@ jobs:
 
   run-migrations:
     docker:
-      # Docker image here that supports NodeJS
+      - image: python:3.7-alpine3.11
     steps:
-      # Checkout code from git
+      - checkout
       - run:
           name: Run migrations
           command: |
@@ -322,7 +322,7 @@ jobs:
               --stack-name udapeople-prod-cloudfront
       # Here's where you will add some code to rollback on failure  
 
-cleanup:
+  cleanup:
     docker:
       - image: amazon/aws-cli
     steps:
