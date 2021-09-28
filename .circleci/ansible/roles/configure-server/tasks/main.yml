@@ -10,25 +10,13 @@
   shell: |
     npm install pm2 -g
 
-- name: "list ~/"
-  shell: |
-    ls ~/
-
-- name: "list ~/project"
-  shell: |
-    ls ~/project
-
-- name: "list /root"
-  become: true
-  shell: |
-    ls /root
 
 - name: "Copy backend to server"
   copy:
-    src: ~/project/backend
+    src: ~/backend
     dest: /home/ubuntu
 
 - name: "Install project dependencies"
   shell: |
-    cd ~/project/backend  
+    cd /home/ubuntu/backend  
     npm install 
