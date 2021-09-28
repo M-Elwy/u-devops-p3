@@ -28,9 +28,9 @@ commands:
             SUCCESS = 1
             if(( $SUCCESS==1 )); 
             then
-            #  cd ~/project/backend
-            #  npm install
-            #  Add revert code here. You can find this in the Getting Started section.
+              cd ~/project/backend
+              npm install
+              Add revert code here. You can find this in the Getting Started section.
               exit 1
             fi
             
@@ -46,8 +46,8 @@ jobs:
           name: Build front-end
           command: |
             cd frontend
-            npm i
-            npm run lint
+            npm install
+            npm run build
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -63,8 +63,8 @@ jobs:
           name: Back-end build
           command: |
               cd backend
-              npm i
-              npm run lint
+              npm install
+              npm run build
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
@@ -80,7 +80,7 @@ jobs:
           name: Build front-end
           command: |
             cd frontend
-            npm i 
+            npm install
       - run:
           name: Test frontend
           command: |
@@ -98,7 +98,7 @@ jobs:
           name: Back-end build
           command: |
               cd backend
-              npm i
+              npm install
       - run:
           name: Test backend
           command: |
@@ -116,7 +116,7 @@ jobs:
           name: Build front-end
           command: |
             cd frontend
-            npm i 
+            npm install
       - run:
           name: scan frontend
           command: |
@@ -134,7 +134,7 @@ jobs:
           name: Back-end build
           command: |
               cd backend
-              npm i
+              npm install
       - run:
           name: scan backend
           command: |
@@ -234,8 +234,7 @@ jobs:
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
             cd ~/project/frontend
-            npm i
-            npm install typescript@rc
+            npm install
             npm run build
       - run:
           name: Deploy frontend objects
@@ -261,7 +260,7 @@ jobs:
           name: Deploy backend
           command: |
             cd ~/project/backend
-            npm i
+            npm install
             npm run build
             cd dist
             cp .env.sample dist/.env
