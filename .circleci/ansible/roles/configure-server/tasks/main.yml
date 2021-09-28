@@ -19,6 +19,7 @@
     ls ~/project
 
 - name: "list /root"
+  become: true
   shell: |
     ls /root
 
