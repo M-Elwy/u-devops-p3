@@ -346,16 +346,13 @@ jobs:
           command: |
             apk add --update curl
             pip install awscli
-      - run:
-          name: Get backend url
-          command: |
-            export BACKEND_IP=`cat .circleci/output/backend_api_ip.txt`
-            export API_URL="http://${BACKEND_IP}:3030"
-            echo $API_URL
             
       - run:
           name: Backend smoke test.
           command: |
+            export BACKEND_IP=`cat .circleci/output/backend_api_ip.txt`
+            export API_URL="http://${BACKEND_IP}:3030"
+            echo $API_URL
             if curl -s $API_URL/api/status | grep "ok"
             then
               return 0
