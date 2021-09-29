@@ -221,8 +221,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update curl nodejs npm ansible zip
             pip install awscli
+            apk add --update curl nodejs npm ansible zip
       - run:
           name: Configure server
           command: |
@@ -236,14 +236,14 @@ jobs:
 
   run-migrations:
     docker:
-      - image: circleci/node:13.8.0
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
-            apk add --update curl tar
             pip install awscli
+            apk add --update curl tar
       - attach_workspace:
           at: ~/
       - run:
