@@ -255,7 +255,7 @@ jobs:
           name: Run migrations
           command: |
             npm run migrations >> migration_result.txt
-       run:
+      - run:
           name: cat result
           command: |
             cat migration_result.txt
