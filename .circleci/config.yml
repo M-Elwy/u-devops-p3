@@ -247,10 +247,12 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
-          name: Install typescript
+          name: Install dependencies
           command: |
             cd backend
+            npm install
             npm install typescript -g
+
       - run:
           name: Run migrations
           command: |
