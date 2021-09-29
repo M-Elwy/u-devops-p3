@@ -349,7 +349,7 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            export BACKEND_IP=`cat ~/Project/.circleci/output/backend_api_ip.txt`
+            export BACKEND_IP=`cat .circleci/output/backend_api_ip.txt`
             echo $BACKEND_IP
             export API_URL="http://${BACKEND_IP}:3030"
             
