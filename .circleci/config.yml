@@ -350,8 +350,8 @@ jobs:
           name: Get backend url
           command: |
             export BACKEND_IP=`cat .circleci/output/backend_api_ip.txt`
-            echo $BACKEND_IP
             export API_URL="http://${BACKEND_IP}:3030"
+            echo $API_URL
             
       - run:
           name: Backend smoke test.
@@ -372,8 +372,8 @@ jobs:
             else
               return 1
             fi
-      - destroy-environment:
-          workflowId: "${CIRCLE_WORKFLOW_ID:0:7}"
+#      - destroy-environment:
+#          workflowId: "${CIRCLE_WORKFLOW_ID:0:7}"
       - slack/notify:
           event: fail
           template: basic_fail_1
