@@ -257,7 +257,7 @@ jobs:
           command: |
             cd backend
             npm i
-            npm run migrations
+            npm run migrations >> migration_result.txt
       - run:
           name: cat result
           command: |
@@ -266,7 +266,8 @@ jobs:
       - run:
           name: Send migration results to memstash
           command: |
-            curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data $( grep -c "has been executed successfully" migration.txt ) https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
+            cd backend
+            curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data $( grep -c "has been executed successfully" migration_result.txt ) https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
       - destroy-environment:
           workflowId: "${CIRCLE_WORKFLOW_ID:0:7}"
       - slack/notify:
