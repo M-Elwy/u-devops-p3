@@ -11,7 +11,7 @@
 - name: "Unzip build archive"
   shell: |
     cd ~/app
-    unzip build.zip
+    unzip -o build.zip
     
 - name: "Install dependencies"
   shell: |
@@ -28,7 +28,3 @@
 - name: print message
   debug:
     msg: "{{ execute_node.stdout_lines }}"
-
-- name: "Start pm2 at startup"
-  shell: |
-    env PATH=$PATH:/usr/local/bin pm2 startup -u ubuntu
