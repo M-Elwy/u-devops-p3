@@ -5,8 +5,8 @@
 
 - name: "Copy build archive"
   copy:
-    src: build.zip.zip
-    dest: "~/app/build.zip.zip"
+    src: build.zip
+    dest: "~/app/build.zip"
 
 - name: "Unzip build archive"
   shell: |
