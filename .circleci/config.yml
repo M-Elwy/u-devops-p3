@@ -291,7 +291,7 @@ jobs:
       - run:
           name: Deploy frontend objects
           command: |
-            aws s3 cp ~/project/frontend/dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}/ --recursive
+            aws s3 cp ~/project/frontend/dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}/ --recursive --acl public-read
       - destroy-environment:
           workflowId: "${CIRCLE_WORKFLOW_ID:0:7}"
       - slack/notify:
