@@ -30,6 +30,15 @@
     cd ~/app
     pm2 start main.js
   register: execute_node
+  environment:
+    ENVIRONMENT: "production"
+    TYPEORM_CONNECTION: "postgres"
+    TYPEORM_ENTITIES: "./src/modules/domain/**/*.entity.ts"
+    TYPEORM_HOST: "database-2.c6ufo5t44n9b.us-west-2.rds.amazonaws.com"
+    TYPEORM_PORT: "5432"
+    TYPEORM_USERNAME: "postgres"
+    TYPEORM_PASSWORD: "database_password"
+    TYPEORM_DATABASE: "postgres"
 
 - name: print message
   debug:
