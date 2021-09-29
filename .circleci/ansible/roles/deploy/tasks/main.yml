@@ -1,22 +1,34 @@
- name: "Build backend"
-  shell: |
-    cd /home/ubuntu/backend
-    npm run build
+- name: "Creates new directory for backend"
+  file:
+    path: ~/app
+    state: directory
 
-- name: "Run migrations and store result"
-  shell: |
-    cd /home/ubuntu/backend
-    npm run migrations > migration.txt
-    cat migrations.txt
-    export CIRCLE_WORKFLOW_ID="{{ CIRCLE_WORKFLOW_ID }}"
-    echo CIRCLE_WORKFLOW_ID=${CIRCLE_WORKFLOW_ID}
-    curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data $( grep -c "has been executed successfully" migration.txt ) https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
-  register: migration_output
+- name: "Copy build archive"
+  copy:
+    src: build.zip.zip
+    dest: "~/app/build.zip.zip"
 
-- debug:
-    msg: "{{ migration_output.stdout_lines }}"
-
-- name: "pm2 start NodeJs"
+- name: "Unzip build archive"
   shell: |
-    cd /home/ubuntu/backend
-    pm2 start npm -- run "start:dev"
+    cd ~/app
+    unzip build.zip
+    
+- name: "Install dependencies"
+  shell: |
+    cd ~/app
+    npm install
+
+- name: "Executing node"
+  shell: |
+    export
+    cd ~/app
+    pm2 start main.js
+  register: execute_node
+
+- name: print message
+  debug:
+    msg: "{{ execute_node.stdout_lines }}"
+
+- name: "Start pm2 at startup"
+  shell: |
+    env PATH=$PATH:/usr/local/bin pm2 startup -u ubuntu
