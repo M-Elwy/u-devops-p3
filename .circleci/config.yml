@@ -247,11 +247,17 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
-          name: Run migrations
+          name: Install typescript
           command: |
             cd backend
             npm install typescript -g
+      - run:
+          name: Run migrations
+          command: |
             npm run migrations >> migration_result.txt
+       run:
+          name: cat result
+          command: |
             cat migration_result.txt
       - run:
           name: Send migration results to memstash
