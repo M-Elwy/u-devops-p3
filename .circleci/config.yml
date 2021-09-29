@@ -250,6 +250,7 @@ jobs:
           name: Run migrations
           command: |
             cd backend
+            npm install typescript -g
             npm run migrations >> migration_result.txt
             cat migration_result.txt
       - run:
