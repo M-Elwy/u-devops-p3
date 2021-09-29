@@ -325,6 +325,7 @@ jobs:
             cd ~/project/backend
             npm install
             npm run build
+            cp package.json dist
             cd dist
             zip -rq build.zip *
             mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
