@@ -261,7 +261,7 @@ jobs:
           name: Send migration results to memstash
           command: |
             cd backend
-            curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data $( grep -c "has been executed successfully" migration_result.txt ) https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID}
+            curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID:0:7}" --request PUT --data $( grep -c "has been executed successfully" migration_result.txt ) https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
       - destroy-environment:
           workflowId: "${CIRCLE_WORKFLOW_ID:0:7}"
       - slack/notify:
@@ -362,15 +362,15 @@ jobs:
       - run:
           name: Frontend smoke test.
           command: |
-            URL="http://udapeople-${CIRCLE_WORKFLOW_ID}.s3-website-us-west-2.amazonaws.com"
+            URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-west-2.amazonaws.com"
             if curl -s ${URL} | grep "Welcome"
             then
               return 0
             else
               return 1
             fi
-#      - destroy-environment:
-#          workflowId: "${CIRCLE_WORKFLOW_ID:0:7}"
+      - destroy-environment:
+          workflowId: "${CIRCLE_WORKFLOW_ID:0:7}"
       - slack/notify:
           event: fail
           template: basic_fail_1
