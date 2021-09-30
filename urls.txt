@@ -1,5 +1,5 @@
 [URL01]: https://github.com/M-Elwy/cdond-c3-projectstarter
-[URL02]: 
-[URL03]: d356q8i0t5nj4e.cloudfront.net
-[URL04]: 
-[URL05]: 
+[URL02]: http://udapeople-2c302f3.s3-website-us-west-2.amazonaws.com/
+[URL03]: d1qxv3bz7ubvfi.cloudfront.net
+[URL04]: http://ec2-18-237-42-67.us-west-2.compute.amazonaws.com:3030/
+[URL05]: http://ec2-34-220-127-91.us-west-2.compute.amazonaws.com:9090/
