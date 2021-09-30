@@ -389,8 +389,8 @@ jobs:
           name: Update cloudfront distribution
           command: |
             aws cloudformation update-stack \
-              --template-file .circleci/files/cloudfront.yml \
-              --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
+              --template-body file://.circleci/files/cloudfront.yml \
+              --parameters ParameterKey=WorkflowID,ParameterValue="${CIRCLE_WORKFLOW_ID:0:7}"
               --stack-name udapeople-cloudfront-stack
       - slack/notify:
           event: fail
